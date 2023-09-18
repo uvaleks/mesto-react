@@ -2,12 +2,24 @@ import '../../src/index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import { useState } from 'react';
 
 function App() {
-  return (
+    const [isEditProfilePopupOpen, onEditProfile] = useState(false);
+    const [isAddPlacePopupOpen, onAddPlace] = useState(false);
+    const [isEditAvatarPopupOpen, onEditAvatar] = useState(false);
+
+    return (
       <div className="page">
         <Header />
-        <Main />
+        <Main
+            isEditProfilePopupOpen={isEditProfilePopupOpen}
+            isAddPlacePopupOpen={isAddPlacePopupOpen}
+            isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+            handleEditProfileClick={() => onEditProfile(true)}
+            handleAddPlaceClick={() => onAddPlace(true)}
+            handleEditAvatarClick={() => onEditAvatar(true)}
+        />
         <Footer />
 
       <template className="card-template">
