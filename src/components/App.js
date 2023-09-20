@@ -5,9 +5,15 @@ import Footer from './Footer';
 import { useState } from 'react';
 
 function App() {
-    const [isEditProfilePopupOpen, onEditProfile] = useState(false);
-    const [isAddPlacePopupOpen, onAddPlace] = useState(false);
-    const [isEditAvatarPopupOpen, onEditAvatar] = useState(false);
+    const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
+    const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
+    const [isEditAvatarPopupOpen, setEditAvatarOpen] = useState(false);
+ 
+    function closeAllPopups() {
+        setEditProfileOpen(false)
+        setAddPlaceOpne(false)
+        setEditAvatarOpen(false)
+    }
 
     return (
       <div className="page">
@@ -16,9 +22,10 @@ function App() {
             isEditProfilePopupOpen={isEditProfilePopupOpen}
             isAddPlacePopupOpen={isAddPlacePopupOpen}
             isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-            handleEditProfileClick={() => onEditProfile(true)}
-            handleAddPlaceClick={() => onAddPlace(true)}
-            handleEditAvatarClick={() => onEditAvatar(true)}
+            onEditProfile={() => setEditProfileOpen(true)}
+            onAddPlace={() => setAddPlaceOpne(true)}
+            onEditAvatar={() => setEditAvatarOpen(true)}
+            closeAllPopups={closeAllPopups}
         />
         <Footer />
 
