@@ -1,6 +1,8 @@
 import '../../src/index.css';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import api from '../utils/api';
+import { useState, useEffect } from 'react';
 
 function Main({
     isEditProfilePopupOpen,
@@ -10,20 +12,41 @@ function Main({
     onEditProfile,
     onAddPlace,
     closeAllPopups
-   }) {
+  }) {
+  
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await api.getUserInfo();
+        setUserName(response.name);
+        setUserDescription(response.about);
+        setUserAvatar(response.avatar);
+      } catch (error) {
+        console.log("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, );
+
+
   return (
     <main className="content">
         <section className="profile">
             <div className="profile__avatar-wrapper">
-            <img className="profile__avatar" src="//:0" alt="Аватар"/>
+            <img className="profile__avatar" src={userAvatar} alt="Аватар"/>
             <div className="profile__avatar-edit-button" onClick={onEditAvatar}></div>
             </div>
             <div className="profile__profile-info">
                 <div className="profile__name-wrapper">
-                    <h1 className="profile__profile-name" id="profile-name"></h1>
+                    <h1 className="profile__profile-name" id="profile-name">{userName}</h1>
                     <button className="profile__edit-button" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
                 </div>
-                <p className="profile__profile-description" id="profile-description"></p>
+                <p className="profile__profile-description" id="profile-description">{userDescription}</p>
             </div>
             <button className="profile__add-button" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
         </section>
