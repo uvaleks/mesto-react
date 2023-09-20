@@ -1,4 +1,5 @@
 import '../../src/index.css';
+import Card from './Card';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
@@ -17,9 +18,10 @@ function Main({
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserInfo = async () => {
       try {
         const response = await api.getUserInfo();
         setUserName(response.name);
@@ -30,9 +32,23 @@ function Main({
       }
     };
 
-    fetchUserData();
+    fetchUserInfo();
   }, );
 
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const response = await api.getCards();
+        setCards(response);
+      } catch (error) {
+        console.log("Error fetching cards:", error);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
+  console.log(cards)
 
   return (
     <main className="content">
@@ -51,6 +67,13 @@ function Main({
             <button className="profile__add-button" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
         </section>
         <section className="elements">
+          {cards.map((card) => (
+            <Card
+              name={card.name}
+              link={card.link}
+              likes={card.likes}
+            />
+          ))}
         </section>
 
     <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} popupName={'edit'} title={'Редактировать профиль'} buttonText={'Сохранить'}>
