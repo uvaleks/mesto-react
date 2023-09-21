@@ -7,7 +7,7 @@ function Card({ name, link, likes, card, onCardClick }) {
 
   return (
     <article className="card" onClick={handleClick}>
-        <img className="card__photo" src={link}/>
+        <img className="card__photo" src={link} alt={`Изображение ${name}`}/>
         <div className="card__bar">
             <h2 className="card__title">{name}</h2>
             <div className="card__like-wrapper">
