@@ -12,7 +12,9 @@ function Main({
     onEditAvatar,
     onEditProfile,
     onAddPlace,
-    closeAllPopups
+    closeAllPopups,
+    card,
+    onCardClick
   }) {
   
   const [userName, setUserName] = useState('');
@@ -33,7 +35,7 @@ function Main({
     };
 
     fetchUserInfo();
-  }, );
+  }, []);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -47,8 +49,6 @@ function Main({
 
     fetchCards();
   }, []);
-
-  console.log(cards)
 
   return (
     <main className="content">
@@ -72,6 +72,9 @@ function Main({
               name={card.name}
               link={card.link}
               likes={card.likes}
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
             />
           ))}
         </section>
@@ -97,7 +100,7 @@ function Main({
 
     <PopupWithForm onClose={closeAllPopups} popupName={'confirm-delete'} title={'Вы уверены?'} buttonText={'Да'}/>
 
-    <ImagePopup/>
+    <ImagePopup card={card} onClose={closeAllPopups}/>
 
     </main>
   );
