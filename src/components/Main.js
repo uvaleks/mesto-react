@@ -17,7 +17,9 @@ function Main({
     onAddPlace,
     closeAllPopups,
     card,
-    onCardClick
+    onCardClick,
+    onCardLike,
+    onCardDelete
   }) {
   
   const currentUser = React.useContext(CurrentUserContext);
@@ -48,6 +50,8 @@ function Main({
               key={card._id}
               card={card}
               onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
               currentUser={currentUser}
             />
           ))}

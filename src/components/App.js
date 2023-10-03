@@ -39,6 +39,25 @@ function App() {
       fetchCards();
     }, []);
 
+    function handleCardLike(card) {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        
+        api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        });
+    }
+
+    function handleCardDelete(card) {
+        api.deleteCard(card._id).then((res) => {
+            if (res.message === 'Пост удалён') {
+                const newCards = cards.filter(function (item) {
+                    return item._id !== card._id;
+                  })
+                setCards(newCards);
+            }
+        });
+    } 
+
     const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarOpen] = useState(false);
@@ -70,6 +89,8 @@ function App() {
                         closeAllPopups={closeAllPopups}
                         card={selectedCard}
                         onCardClick={handleCardClick}
+                        onCardLike={handleCardLike}
+                        onCardDelete={handleCardDelete}
                     />
                     <Footer />
                 </div>
