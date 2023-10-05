@@ -1,6 +1,7 @@
 import '../../src/index.css';
 import Header from './Header';
 import Main from './Main';
+import EditProfilePopup from './EditProfilePopup';
 import Footer from './Footer';
 import api from '../utils/api';
 import { useState, useEffect } from 'react';
@@ -56,7 +57,14 @@ function App() {
                 setCards(newCards);
             }
         });
-    } 
+    }
+
+    function handleUpdateUser({name, about}) {
+        api.patchUserInfo({name, about}).then((res) => {
+            setCurrentUser({name: res.name, about: res.about, avatar: res.avatar});
+            closeAllPopups();
+        })
+    }
 
     const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
@@ -80,7 +88,6 @@ function App() {
                 <div className="page">
                     <Header />
                     <Main
-                        isEditProfilePopupOpen={isEditProfilePopupOpen}
                         isAddPlacePopupOpen={isAddPlacePopupOpen}
                         isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                         onEditProfile={() => setEditProfileOpen(true)}
@@ -91,6 +98,11 @@ function App() {
                         onCardClick={handleCardClick}
                         onCardLike={handleCardLike}
                         onCardDelete={handleCardDelete}
+                    />
+                    <EditProfilePopup
+                        isOpen={isEditProfilePopupOpen}
+                        onClose={closeAllPopups}
+                        onUpdateUser={handleUpdateUser}
                     />
                     <Footer />
                 </div>

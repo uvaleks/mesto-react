@@ -2,14 +2,11 @@ import '../../src/index.css';
 import Card from './Card';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import api from '../utils/api';
-import { useState, useEffect } from 'react';
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CardsContext } from '../contexts/CardsContext';
 
 function Main({
-    isEditProfilePopupOpen,
     isAddPlacePopupOpen,
     isEditAvatarPopupOpen,
     onEditAvatar,
@@ -56,13 +53,6 @@ function Main({
             />
           ))}
         </section>
-
-    <PopupWithForm isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} popupName={'edit'} title={'Редактировать профиль'} buttonText={'Сохранить'}>
-      <input className="popup__input" type="text" name="name" placeholder="Имя" autoComplete="off" minLength="2" maxLength="40" required/>
-      <span className="name-error popup__input-error"></span>
-      <input className="popup__input" type="text" name="about" placeholder="Занятие" autoComplete="off" minLength="2" maxLength="200" required/>
-      <span className="about-error popup__input-error"></span>
-    </PopupWithForm>
 
     <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} popupName={'add'} title={'Новое место'} buttonText={'Создать'}>
       <input className="popup__input" type="text" name="input-place" placeholder="Название" autoComplete="off" minLength="2" maxLength="30" required/>
