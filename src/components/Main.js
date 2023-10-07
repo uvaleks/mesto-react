@@ -8,7 +8,6 @@ import { CardsContext } from '../contexts/CardsContext';
 
 function Main({
     isAddPlacePopupOpen,
-    isEditAvatarPopupOpen,
     onEditAvatar,
     onEditProfile,
     onAddPlace,
@@ -59,11 +58,6 @@ function Main({
       <span className="input-place-error popup__input-error"></span>
       <input className="popup__input" type="url" name="input-link" placeholder="Ссылка на картинку" autoComplete="off" required/>
       <span className="input-link-error popup__input-error"></span>
-    </PopupWithForm>
-
-    <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} popupName={'edit-avatar'} title={'Обновить аватар'} buttonText={'Сохранить'}>
-      <input className="popup__input" type="url" name="input-avatar-link" placeholder="Ссылка на картинку" autoComplete="off" required/>
-      <span className="input-avatar-link-error popup__input-error"></span>
     </PopupWithForm>
 
     <PopupWithForm onClose={closeAllPopups} popupName={'confirm-delete'} title={'Вы уверены?'} buttonText={'Да'}/>

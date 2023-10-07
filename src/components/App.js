@@ -2,6 +2,7 @@ import '../../src/index.css';
 import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import Footer from './Footer';
 import api from '../utils/api';
 import { useState, useEffect } from 'react';
@@ -66,6 +67,13 @@ function App() {
         })
     }
 
+    function handleUpdateAvatar(link) {
+        api.patchAvatar(link).then((res) => {
+            setCurrentUser({name: res.name, about: res.about, avatar: res.avatar});
+            closeAllPopups();
+        })
+    }
+
     const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarOpen] = useState(false);
@@ -103,6 +111,11 @@ function App() {
                         isOpen={isEditProfilePopupOpen}
                         onClose={closeAllPopups}
                         onUpdateUser={handleUpdateUser}
+                    />
+                    <EditAvatarPopup
+                        isOpen={isEditAvatarPopupOpen}
+                        onClose={closeAllPopups}
+                        onUpdateAvatar={handleUpdateAvatar}
                     />
                     <Footer />
                 </div>
