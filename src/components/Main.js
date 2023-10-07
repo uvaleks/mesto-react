@@ -4,22 +4,20 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CardsContext } from '../contexts/CardsContext';
 
 function Main({
-    isAddPlacePopupOpen,
     onEditAvatar,
     onEditProfile,
     onAddPlace,
     closeAllPopups,
-    card,
+    cards,
+    selectedCard,
     onCardClick,
     onCardLike,
     onCardDelete
   }) {
   
   const currentUser = React.useContext(CurrentUserContext);
-  const cards = React.useContext(CardsContext);
 
   return (
     <main className="content">
@@ -53,16 +51,9 @@ function Main({
           ))}
         </section>
 
-    <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} popupName={'add'} title={'Новое место'} buttonText={'Создать'}>
-      <input className="popup__input" type="text" name="input-place" placeholder="Название" autoComplete="off" minLength="2" maxLength="30" required/>
-      <span className="input-place-error popup__input-error"></span>
-      <input className="popup__input" type="url" name="input-link" placeholder="Ссылка на картинку" autoComplete="off" required/>
-      <span className="input-link-error popup__input-error"></span>
-    </PopupWithForm>
-
     <PopupWithForm onClose={closeAllPopups} popupName={'confirm-delete'} title={'Вы уверены?'} buttonText={'Да'}/>
 
-    <ImagePopup card={card} onClose={closeAllPopups}/>
+    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
     </main>
   );

@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import Footer from './Footer';
 import api from '../utils/api';
 import { useState, useEffect } from 'react';
@@ -74,6 +75,13 @@ function App() {
         })
     }
 
+    function handleAddPlaceSubmit(name, link) {
+        api.postCard({name, link}).then((newCard) => {
+            setCards([newCard, ...cards]); 
+            closeAllPopups();
+        })
+    }
+
     const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarOpen] = useState(false);
@@ -96,13 +104,12 @@ function App() {
                 <div className="page">
                     <Header />
                     <Main
-                        isAddPlacePopupOpen={isAddPlacePopupOpen}
-                        isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                         onEditProfile={() => setEditProfileOpen(true)}
                         onAddPlace={() => setAddPlaceOpne(true)}
                         onEditAvatar={() => setEditAvatarOpen(true)}
                         closeAllPopups={closeAllPopups}
-                        card={selectedCard}
+                        cards={cards}
+                        selectedCard={selectedCard}
                         onCardClick={handleCardClick}
                         onCardLike={handleCardLike}
                         onCardDelete={handleCardDelete}
@@ -116,6 +123,11 @@ function App() {
                         isOpen={isEditAvatarPopupOpen}
                         onClose={closeAllPopups}
                         onUpdateAvatar={handleUpdateAvatar}
+                    />
+                    <AddPlacePopup
+                        isOpen={isAddPlacePopupOpen}
+                        onClose={closeAllPopups}
+                        onAddCard={handleAddPlaceSubmit}
                     />
                     <Footer />
                 </div>
