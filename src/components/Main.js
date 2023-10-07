@@ -1,76 +1,60 @@
 import '../../src/index.css';
 import Card from './Card';
-import api from '../utils/api';
-import { useState, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
+import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main({
     onEditAvatar,
     onEditProfile,
     onAddPlace,
-    onCardClick
+    closeAllPopups,
+    cards,
+    selectedCard,
+    onCardClick,
+    onCardLike,
+    onCardDelete
   }) {
   
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await api.getUserInfo();
-        setUserName(response.name);
-        setUserDescription(response.about);
-        setUserAvatar(response.avatar);
-      } catch (error) {
-        console.log("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await api.getCards();
-        setCards(response);
-      } catch (error) {
-        console.log("Error fetching cards:", error);
-      }
-    };
-
-    fetchCards();
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">
-      <section className="profile">
-          <div className="profile__avatar-wrapper">
-          <img className="profile__avatar" src={userAvatar} alt="Аватар"/>
-          <div className="profile__avatar-edit-button" onClick={onEditAvatar}></div>
-          </div>
-          <div className="profile__profile-info">
-              <div className="profile__name-wrapper">
-                  <h1 className="profile__profile-name" id="profile-name">{userName}</h1>
-                  <button className="profile__edit-button" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
-              </div>
-              <p className="profile__profile-description" id="profile-description">{userDescription}</p>
-          </div>
-          <button className="profile__add-button" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
-      </section>
-      <section className="elements">
-        {cards.map((card) => (
-          <Card
-            name={card.name}
-            link={card.link}
-            likes={card.likes}
-            key={card._id}
-            card={card}
-            onCardClick={onCardClick}
-          />
-        ))}
-      </section>
+        <section className="profile">
+            <div className="profile__avatar-wrapper">
+            <img className="profile__avatar" src={currentUser.avatar} alt="Аватар"/>
+            <div className="profile__avatar-edit-button" onClick={onEditAvatar}></div>
+            </div>
+            <div className="profile__profile-info">
+                <div className="profile__name-wrapper">
+                    <h1 className="profile__profile-name" id="profile-name">{currentUser.name}</h1>
+                    <button className="profile__edit-button" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
+                </div>
+                <p className="profile__profile-description" id="profile-description">{currentUser.about}</p>
+            </div>
+            <button className="profile__add-button" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
+        </section>
+        <section className="elements">
+          {cards.map((card) => (
+            <Card
+              name={card.name}
+              link={card.link}
+              likes={card.likes}
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
+              currentUser={currentUser}
+            />
+          ))}
+        </section>
+
+    <PopupWithForm onClose={closeAllPopups} popupName={'confirm-delete'} title={'Вы уверены?'} buttonText={'Да'}/>
+
+    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+
     </main>
   );
 }
