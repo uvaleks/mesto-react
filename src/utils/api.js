@@ -14,9 +14,6 @@ class Api {
     getCards() {
         return fetch(`${this._baseUrl}/cards`, {headers: this._headers})
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 
     postCard({name, link}) {
@@ -32,9 +29,6 @@ class Api {
             })
         })
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 
     patchAvatar(link) {
@@ -49,9 +43,6 @@ class Api {
             })
         })
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 
     changeLikeCardStatus(id, isLiked) {
@@ -64,9 +55,6 @@ class Api {
                 }
             })
             .then(this._checkResponse)
-            .then((result) => {
-                return result;
-            })
         } else {
             return fetch(`${this._baseUrl}/cards/${id}/likes`, {
                 method: 'DELETE',
@@ -76,9 +64,6 @@ class Api {
                 }
             })
             .then(this._checkResponse)
-            .then((result) => {
-                return result;
-            })
         }
     }
 
@@ -91,17 +76,11 @@ class Api {
             }
         })
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 
     patchUserInfo({name, about}) {
@@ -117,9 +96,6 @@ class Api {
             })
         })
         .then(this._checkResponse)
-        .then((result) => {
-            return result;
-        })
     }
 }
 

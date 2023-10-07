@@ -1,4 +1,3 @@
-import '../../src/index.css';
 import logoPath from '../images/logo.svg';
 
 function Header() {

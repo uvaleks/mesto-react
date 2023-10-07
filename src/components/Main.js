@@ -1,7 +1,4 @@
-import '../../src/index.css';
 import Card from './Card';
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -50,11 +47,6 @@ function Main({
             />
           ))}
         </section>
-
-    <PopupWithForm onClose={closeAllPopups} popupName={'confirm-delete'} title={'Вы уверены?'} buttonText={'Да'}/>
-
-    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
-
     </main>
   );
 }

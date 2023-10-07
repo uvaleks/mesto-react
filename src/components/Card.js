@@ -1,5 +1,3 @@
-import '../../src/index.css';
-
 function Card({ name, link, likes, card, onCardClick, onCardLike, onCardDelete, currentUser }) {
     function handleClick() {
         onCardClick(card);
@@ -18,7 +16,7 @@ function Card({ name, link, likes, card, onCardClick, onCardLike, onCardDelete, 
 
     return (
         <article className="card">
-            <img onClick={handleClick} className="card__photo" src={link}/>
+            <img onClick={handleClick} className="card__photo" src={link} alt={name}/>
             {isOwn && <div className="card__delete-button-wrapper">
                 <button onClick={handleDeleteClick} className="card__delete-button" type="button" aria-label="Удалить"/>
             </div>} 

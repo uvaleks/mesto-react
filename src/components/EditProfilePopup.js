@@ -1,11 +1,12 @@
-import '../../src/index.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import PopupWithForm from './PopupWithForm';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const currentUser = React.useContext(CurrentUserContext);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -15,12 +16,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     setDescription(e.target.value);
   };
 
-  const currentUser = React.useContext(CurrentUserContext);
-
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]); 
+  }, [currentUser, isOpen]); 
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,19 +31,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   } 
 
   return (
-    <div className={`popup popup_type_edit ${isOpen && 'popup_opened'}`}>
-          <div className="popup__container">
-              <form onSubmit={handleSubmit} className="popup__form popup__edit-form" name="edit-form" noValidate>
-                  <h2 className="popup__title">Редактировать профиль</h2>
-                  <input onChange={handleNameChange} value={name}  className="popup__input" type="text" name="name" placeholder="Имя" autoComplete="off" minLength="2" maxLength="40" required/>
-                  <span className="name-error popup__input-error"></span>
-                  <input onChange={handleDescriptionChange} value={description} className="popup__input" type="text" name="about" placeholder="Занятие" autoComplete="off" minLength="2" maxLength="200" required/>
-                  <span className="about-error popup__input-error"></span>
-                  <button className="popup__submit-button" type="submit">Сохранить</button>
-              </form>
-              <button className="popup__close-button" type="button" aria-label="Закрыть" onClick={onClose}></button>
-          </div>
-    </div>
+    <PopupWithForm handleSubmit={handleSubmit} isOpen={isOpen} onClose={onClose} popupName={'edit-form'} title={"Редактировать профиль"} buttonText={"Сохранить"}>
+      <input onChange={handleNameChange} value={name}  className="popup__input" type="text" name="name" placeholder="Имя" autoComplete="off" minLength="2" maxLength="40" required/>
+      <span className="name-error popup__input-error"></span>
+      <input onChange={handleDescriptionChange} value={description} className="popup__input" type="text" name="about" placeholder="Занятие" autoComplete="off" minLength="2" maxLength="200" required/>
+      <span className="about-error popup__input-error"></span>
+    </PopupWithForm>
   );
 }
 

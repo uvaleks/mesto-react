@@ -1,5 +1,3 @@
-import '../../src/index.css';
-
 function Footer() {
   return (
     <footer className="footer">
