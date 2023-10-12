@@ -6,9 +6,7 @@ function Main({
     onEditAvatar,
     onEditProfile,
     onAddPlace,
-    closeAllPopups,
     cards,
-    selectedCard,
     onCardClick,
     onCardLike,
     onCardDelete

@@ -24,7 +24,7 @@ function Card({ name, link, likes, card, onCardClick, onCardLike, onCardDelete, 
                 <h2 className="card__title">{name}</h2>
                 <div className="card__like-wrapper">
                 <button onClick={handleLikeClick} className={`card__like-button ${isLiked && 'card__like-button_active'}`} type="button" aria-label="Нравится"></button>
-                <p className="card__like-counter">{likes.length}</p>
+                {(likes.length > 0) && <p className="card__like-counter">{likes.length}</p>}
                 </div>
             </div>
         </article>

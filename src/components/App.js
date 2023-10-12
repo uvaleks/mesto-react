@@ -13,7 +13,7 @@ import { CardsContext } from '../contexts/CardsContext';
 
 
 function App() {
-    const [currentUser, setCurrentUser] = useState({_id: '5f8fa5ca357b0fcf2e520a42', name: 'Имя', about: 'Описание', avatar: '#'});
+    const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '', _id: '', cohort: '' });
     const [cards, setCards] = useState([]);
     const [isEditProfilePopupOpen, setEditProfileOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlaceOpne] = useState(false);
@@ -85,7 +85,7 @@ function App() {
     function handleUpdateAvatar(link) {
         api.patchAvatar(link)
         .then((res) => {
-            setCurrentUser({name: res.name, about: res.about, avatar: res.avatar});
+            setCurrentUser({avatar: res.avatar});
             closeAllPopups();
         })
         .catch((error) => {
